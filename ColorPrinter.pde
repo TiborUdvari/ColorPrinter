@@ -73,7 +73,7 @@ void draw() {
     
     image(pgPreview, 0, 0);
     
-    //monitorFolder();
+    monitorFolder();
     
     delay(1000);
 }
@@ -160,7 +160,7 @@ void keyPressed() {
 }
 
 void monitorFolder() {
-    println("Monitoring folder " + palettesFolder);
+    //println("Monitoring folder " + palettesFolder);
     
     //Listall files in the downloads folder
     File dir = new File(palettesFolder);
@@ -259,5 +259,5 @@ void monitorFolder() {
             }
         }
     }
-    println("Done");
+    //println("Done");
 }
