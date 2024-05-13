@@ -71,6 +71,11 @@ void draw() {
     
     background(255);
     
+    fill(0);
+    textAlign(CENTER, CENTER);
+    textSize(30);
+    text("Monitoring folder\n\n" + palettesFolder, 0, 0, width, height);
+    
     image(pgPreview, 0, 0);
     
     monitorFolder();
@@ -82,7 +87,7 @@ void previewPage(String paletteFilename) {
     
     //Draw into preview graphic
     pgPreview.beginDraw();
-    pgPreview.clear();
+    pgPreview.background(255);
     drawPage(pgPreview, paletteFilename);
     pgPreview.endDraw();
 }
