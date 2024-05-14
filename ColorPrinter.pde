@@ -4,7 +4,6 @@
 
 import processing.pdf.*;
 
-String palettesFolder = "/Users/pierre.rossel/Downloads/";
 String archivesFolder;
 
 // Page size
@@ -213,16 +212,16 @@ void monitorFolder() {
           // args = append(args, "scaling=100");
           args = append(args, pagePath);
           println(join(args, " "));
-          //Process p = exec(args);
-          ////Process p = exec("pwd");
+          Process p = exec(args);
+          //Process p = exec("pwd");
 
-          //try {
-          //  int result = p.waitFor();
-          //  println("the process returned " + result);
-          //}
-          //catch(InterruptedException e) {
-          //  println(e.toString());
-          //}
+          try {
+            int result = p.waitFor();
+            println("the process returned " + result);
+          }
+          catch(InterruptedException e) {
+            println(e.toString());
+          }
 
 
           // Move paletteFilename from palettesFolder to archivesFolder
