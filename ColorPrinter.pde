@@ -219,7 +219,7 @@ void monitorFolder() {
           args = append(args, pagePath);
           println(join(args, " "));
 
-          if (false) {
+          if (true) {
             Process p = exec(args);
             //Process p = exec("pwd");
 
