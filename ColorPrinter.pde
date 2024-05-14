@@ -9,7 +9,7 @@ String archivesFolder;
 // Page size
 float cm = 72 / 2.54; // Convert cm to pix at 72 DPI
 int pageWidth = round(10.0 * cm);
-int pageHeight = round(14.6 * cm);
+int pageHeight = round(14.8 * cm);
 
 float marginLeft = 0.5 * cm;
 float marginTop = 0.4 * cm;
@@ -38,7 +38,7 @@ void setup() {
   background(255);
   println(archivesFolder);
 
-//   archivesFolder = sketchPath("archives/");
+  //   archivesFolder = sketchPath("archives/");
   archivesFolder = palettesFolder + "archives/";
 
   //Verify if archives folder exists and create it if it doesn't
@@ -207,23 +207,25 @@ void monitorFolder() {
           // Print the page
           String[]args = new String[0];
           args = append(args, "lp");
-          // args = append(args, "-o");
-          //args =append(args, "media=Custom."+ pageWidth + "x" + pageHeight + "cm");
+          args = append(args, "-o");
+          args =append(args, "media=Custom."+ round(pageWidth * 10 / cm) + "x" + round(pageHeight * 10 / cm) + "mm");
           // args = append(args, "-o");
           // args = append(args, "scaling=100");
           args = append(args, pagePath);
           println(join(args, " "));
-          Process p = exec(args);
-          //Process p = exec("pwd");
 
-          try {
-            int result = p.waitFor();
-            println("the process returned " + result);
-          }
-          catch(InterruptedException e) {
-            println(e.toString());
-          }
+          if (true) {
+            Process p = exec(args);
+            //Process p = exec("pwd");
 
+            try {
+              int result = p.waitFor();
+              println("the process returned " + result);
+            }
+            catch(InterruptedException e) {
+              println(e.toString());
+            }
+          }
 
           // Move paletteFilename from palettesFolder to archivesFolder
           File file = new File(palettesFolder + paletteFilename);
