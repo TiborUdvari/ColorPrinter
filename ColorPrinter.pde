@@ -26,6 +26,7 @@ String paletteFilename;
 
 PFont fontTitle;
 PFont fontText;
+PFont fontTM;
 
 JSONObject luminance;
 
@@ -60,6 +61,7 @@ void setup() {
 
   fontTitle = createFont("HankenGrotesk-VariableFont_wght.ttf", 9);
   fontText = createFont("HankenGrotesk-VariableFont_wght.ttf", 6);
+  fontTM = createFont("HankenGrotesk-VariableFont_wght.ttf", 4);
 
   luminance = loadJSONObject("luminance.json");
   //println(luminance);
@@ -134,6 +136,9 @@ void drawPage(PGraphics page, String paletteFilename) {
   page.fill(0);
   page.textFont(fontTitle);
   page.text("LUMINANCE 6901", marginLeft, 0.7 * pageHeight);
+  float wLum = page.textWidth("LUMINANCE 6901");
+  page.textFont(fontTM);
+  page.text("TM", marginLeft + wLum, 0.7 * pageHeight - fontTitle.getSize() * 0.5);
 
   // Extract the 4 references from filename(ex : 2024 - 05 - 13 202302 Palette 850 069 070 862.svg ->[850, 069, 070, 862])
   String[] parts = splitTokens(paletteFilename.replace(".svg", ""), " ");
@@ -214,7 +219,7 @@ void monitorFolder() {
           args = append(args, pagePath);
           println(join(args, " "));
 
-          if (true) {
+          if (false) {
             Process p = exec(args);
             //Process p = exec("pwd");
 
