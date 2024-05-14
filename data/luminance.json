@@ -1,62 +1,62 @@
 {
     "002": { 
         "text": "Silver grey - Gris argenté\nSilbergrau - Grigio argento\nGris plateado - Cinzento prateado\nPB15/PBk6",
-        "textEnFr": "Silver grey\nGris argenté\nPB15/PBk6",
+        "textEnFrDe": "Silver grey\nGris argenté\nSilbergrau",
         "hsb": {"hue":213, "saturation":10, "brightness":92}
     },
     "850": { 
         "text": "Cornelian - Cornaline\nKornalin - Cornalina\nCornalina - Cornalina\nPO61",
-        "textEnFr": "Cornelian\nCornaline\nPO61",
+        "textEnFrDe": "Cornelian\nCornaline\nKornalin",
         "hsb": {"hue":24, "saturation":72, "brightness":86}
     },
     "070": { 
         "text": "Scarlet - Ecarlate\nScharlachrot - Scarlatto\nEscarlata - Escarlate\nPR254",
-        "textEnFr": "Scarlet\nEcarlate\nPR254",
+        "textEnFrDe": "Scarlet\nEcarlate\nScharlachrot",
         "hsb": {"hue":356, "saturation":77, "brightness":80}
     },
     "120": { 
         "text": "Violet - Violet\nViolett - Violetto\nVioleta - Violeta\nPV23",
-        "textEnFr": "Violet\nViolet\nPV23",
+        "textEnFrDe": "Violet\nViolet\nViolett",
         "hsb": {"hue":262, "saturation":50, "brightness":56}
     },
     "162": { 
         "text": "Phthalocyanine blue - Bleu de phtalocyanine\nPhthalocyaninblau - Blu ftalo\nAzul phtalo - Azul ftálico\nPB15:3",
-        "textEnFr": "Phthalocyanine blue\nBleu de phtalocyanine\nPB15:3",
+        "textEnFrDe": "Phthalocyanine blue\nBleu de phtalocyanine\nPhthalocyaninblau",
         "hsb": {"hue":211, "saturation":73, "brightness":69}
     },
     "220": { 
         "text": "Grass green - Vert prairie\nGrasgrün - Verde prato\nVerde prado - Verde prato\nPY1/PY3/PG7",
-        "textEnFr": "Grass green\nVert prairie\nPY1/PY3/PG7",
+        "textEnFrDe": "Grass green\nVert prairie\nGrasgrün",
         "hsb": {"hue":95, "saturation":55, "brightness":56}
     },
     "820": { 
         "text": "Golden bismuth yellow - Jaune bismuth doré\nGold Bismuthgelb - Giallo bismuth dorato\nAmarillo bismuth dorado - Amarelo bismuto dourado\nPY184",
-        "textEnFr": "Golden bismuth yellow\nJaune bismuth doré\nPY184",
+        "textEnFrDe": "Golden bismuth yellow\nJaune bismuth doré\nGold Bismuthgelb",
         "hsb": {"hue":41, "saturation":61, "brightness":95}
     },
     "069": { 
         "text": "Burnt sienna - Sienne brûlée\nSiena gebrannt - Siena bruciata\nSiena quemada - Siena queimado\nPR101/PBk6",
-        "textEnFr": "Burnt sienna\nSienne brûlée\nPR101/PBk6",
+        "textEnFrDe": "Burnt sienna\nSienne brûlée\nSiena gebrannt",
         "hsb": {"hue":9, "saturation":62, "brightness":44}
     },
     "171": { 
         "text": "Turquoise blue - Bleu turquoise\nTürkisblau - Blu turchese\nAzul turquesa - Azul turquesa\nPB15:3/PG7/PBk9",
-        "textEnFr": "Turquoise blue\nBleu turquoise\nPB15:3/PG7/PBk9",
+        "textEnFrDe": "Turquoise blue\nBleu turquoise\nTürkisblau",
         "hsb": {"hue":188, "saturation":50, "brightness":78}
     },
     "862": { 
         "text": "Burnt sienna 10% - Sienne brûlée 10%\nSiena gebrannt 10% - Siena bruciata 10%\nSienna quemada 10% - Siena queimado 10%\nPR101/PBk6",
-        "textEnFr": "Burnt sienna 10%\nSienne brûlée 10%\nPR101/PBk6",
+        "textEnFrDe": "Burnt sienna 10%\nSienne brûlée 10%\nSiena gebrannt 10%",
         "hsb": {"hue":357, "saturation":18, "brightness":82}
     },
     "739": { 
         "text": "Dark sap green - Vert sapin foncé\nDunkel tannengrün - Verde abete scuro\nVerde Abeto oscuro - Verde Abeto Escuro\nPG7/PBk6",
-        "textEnFr": "Dark sap green\nVert sapin foncé\nPG7/PBk6",
+        "textEnFrDe": "Dark sap green\nVert sapin foncé\nDunkel tannengrün",
         "hsb": {"hue":174, "saturation":68, "brightness":23}
     },
     "350": { 
         "text": "Purplish red - Rouge pourpre\nPurpurrot - Rosso porpora\nRojo púrpura - Vermelho púrpura\nPR122/PR179",
-        "textEnFr": "Purplish red\nRouge pourpre\nPR122/PR179",
+        "textEnFrDe": "Purplish red\nRouge pourpre\nPurpurrot",
         "hsb": {"hue":333, "saturation":76, "brightness":60}
     }
 }

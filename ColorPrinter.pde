@@ -157,7 +157,7 @@ void drawRef(PGraphics page, String ref, float xRef, float yRef) {
   page.colorMode(HSB, 360, 100, 100);
   //println(hsb.getInt("hue"), hsb.getInt("saturation"), hsb.getInt("brightness"));
   page.fill(0);
-  page.text(ref + "\n" + refLuminance.getString("text"), xRef, yRef);
+  page.text(ref + "\n" + refLuminance.getString("textEnFrDe"), xRef, yRef);
 
   // color patch
   page.noStroke();
