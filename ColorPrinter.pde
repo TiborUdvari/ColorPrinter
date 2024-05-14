@@ -4,7 +4,6 @@
 
 import processing.pdf.*;
 
-
 String palettesFolder = "/Users/pierre.rossel/Downloads/";
 String archivesFolder;
 
@@ -13,10 +12,16 @@ float cm = 72 / 2.54; // Convert cm to pix at 72 DPI
 int pageWidth = round(10.0 * cm);
 int pageHeight = round(14.6 * cm);
 
+float marginLeft = 0.5 * cm;
+float marginTop = 0.4 * cm;
+
+float previewScale = 2;
+
+PGraphics pgPreview; // One graphics for preview
+
 PShape shape;
 PShape shapeLogo;
 
-PGraphics pgPreview; // One graphics for preview
 
 String paletteFilename;
 
@@ -26,243 +31,210 @@ PFont fontText;
 JSONObject luminance;
 
 void settings() {
-    size(pageWidth, pageHeight);
+  size(round(pageWidth * previewScale), round(pageHeight * previewScale));
 }
 
 void setup() {
-    //size(pageWidth, pageHeight);
-    
-    background(255);
-    println(archivesFolder);
-    
-    archivesFolder = sketchPath("archives/");
-    
-    //Verify if archives folder exists and create it if it doesn't
-    File folder = new File(archivesFolder);
-    if (!folder.exists()) {
-        folder.mkdir();
-        println(folder.toPath());
-    }
-    
-    //load svg file 2024-05-13 185455 Palette 350 070.svg
-    //shape = loadShape(palettesFolder + "2024-05-13 185455 Palette 350 070.svg");
-    //shape = loadShape(palettesFolder + "Hexagone2.svg");
-    //shape = loadShape(palettesFolder + "2024-05-13 200254 Palette 069 220 171 162.svg");
-    //shape = loadShape(palettesFolder + "2024-05-13 202302 Palette 850 069 070 862.svg");
-    
-    shapeLogo = loadShape("LOGO.svg");
-    
-    pgPreview = createGraphics(pageWidth, pageHeight);
-    
-    fontTitle = createFont("HankenGrotesk-VariableFont_wght.ttf", 13);
-    fontText = createFont("HankenGrotesk-VariableFont_wght.ttf", 10);
-    
-    luminance = loadJSONObject("luminance.json");
-    //println(luminance);
-    
-    //TEST preview
-    //paletteFilename = "2024-05-13 202302 PaletteFake 070 820 739 850.svg";
-    //shape = loadShape(palettesFolder + paletteFilename);
-    //previewPage(paletteFilename);
+
+  background(255);
+  println(archivesFolder);
+
+  archivesFolder = sketchPath("archives/");
+
+  //Verify if archives folder exists and create it if it doesn't
+  File folder = new File(archivesFolder);
+  if (!folder.exists()) {
+    folder.mkdir();
+    println(folder.toPath());
+  }
+
+  //load svg file 2024-05-13 185455 Palette 350 070.svg
+  //shape = loadShape(palettesFolder + "2024-05-13 185455 Palette 350 070.svg");
+  //shape = loadShape(palettesFolder + "Hexagone2.svg");
+  //shape = loadShape(palettesFolder + "2024-05-13 200254 Palette 069 220 171 162.svg");
+  //shape = loadShape(palettesFolder + "2024-05-13 202302 Palette 850 069 070 862.svg");
+
+  shapeLogo = loadShape("LOGO.svg");
+
+  pgPreview = createGraphics(pageWidth, pageHeight);
+
+  fontTitle = createFont("HankenGrotesk-VariableFont_wght.ttf", 9);
+  fontText = createFont("HankenGrotesk-VariableFont_wght.ttf", 6);
+
+  luminance = loadJSONObject("luminance.json");
+  //println(luminance);
+
+  //TEST preview
+  //paletteFilename = "2024-05-13 202302 PaletteFake 070 820 739 850.svg";
+  //shape = loadShape(palettesFolder + paletteFilename);
+  //previewPage(paletteFilename);
 }
 
 
 void draw() {
-    
-    background(255);
-    
-    fill(0);
-    textAlign(CENTER, CENTER);
-    textSize(30);
-    text("Monitoring folder\n\n" + palettesFolder, 0, 0, width, height);
-    
-    image(pgPreview, 0, 0);
-    
-    monitorFolder();
-    
-    delay(1000);
+
+  background(255);
+
+  fill(0);
+  textAlign(CENTER, CENTER);
+  textSize(30);
+  text("Monitoring folder\n\n" + palettesFolder, 0, 0, width, height);
+
+  image(pgPreview, 0, 0, width, height);
+
+  monitorFolder();
+
+  delay(1000);
 }
 
 void previewPage(String paletteFilename) {
-    
-    //Draw into preview graphic
-    pgPreview.beginDraw();
-    pgPreview.background(255);
-    drawPage(pgPreview, paletteFilename);
-    pgPreview.endDraw();
+
+  //Draw into preview graphic
+  pgPreview.beginDraw();
+  //pgPreview.scale(previewScale, previewScale);
+  pgPreview.colorMode(RGB, 255, 255, 255);
+  pgPreview.background(255);
+  drawPage(pgPreview, paletteFilename);
+  pgPreview.endDraw();
 }
 
 
 String exportPage(String paletteFilename) {
-    //page filename is the same as palette, but with .pdf extension
-    String pageFilename = paletteFilename.replace(".svg", ".pdf");
-    String pagePath = archivesFolder + pageFilename;
-    
-    //create PDF forA5 format
-    PGraphicsPDF pdf = (PGraphicsPDF) createGraphics(pageWidth, pageHeight, PDF, pagePath);
-    pdf.beginDraw();
-    drawPage(pdf, paletteFilename);
-    pdf.dispose();
-    pdf.endDraw();
-    
-    pdf = null;
-    
-    println("Page saved to " + pagePath);
-    
-    return pagePath;
+  //page filename is the same as palette, but with .pdf extension
+  String pageFilename = paletteFilename.replace(".svg", ".pdf");
+  String pagePath = archivesFolder + pageFilename;
+
+  //create PDF forA5 format
+  PGraphicsPDF pdf = (PGraphicsPDF) createGraphics(pageWidth, pageHeight, PDF, pagePath);
+  pdf.beginDraw();
+  drawPage(pdf, paletteFilename);
+  pdf.dispose();
+  pdf.endDraw();
+
+  pdf = null;
+
+  println("Page saved to " + pagePath);
+
+  return pagePath;
 }
 
 void drawPage(PGraphics page, String paletteFilename) {
-    
-    // Logo
-    page.shapeMode(CORNER);
-    page.shape(shapeLogo, 0.7 * cm, 0.5 * cm);
-    
-    // palette
-    page.shapeMode(CENTER);
-    float shapeScale = 0.51;
-    page.shape(shape, page.width / 2, page.height * 0.4, shape.width * shapeScale, shape.height * shapeScale);
-    
-    // Luminance
-    page.fill(0);
-    page.textFont(fontTitle);
-    page.text("LUMINANCE6901", 0.7 * cm, 15 * cm);
-    
-    // Extract the 4 references from filename(ex : 2024 - 05 - 13 202302 Palette 850 069 070 862.svg ->[850, 069, 070, 862])
-    String[] parts = splitTokens(paletteFilename.replace(".svg", ""), " ");
-    String[] refs = subset(parts, 3, 4);
-    
-    // Draw the 4 references
-    page.textFont(fontText);
-    drawRef(page, refs[0], 0.7 * cm, 16 * cm);
-    drawRef(page, refs[1], 0.52 * page.width, 16 * cm);
-    drawRef(page, refs[2], 0.7 * cm, 18.8 * cm);
-    drawRef(page, refs[3], 0.52 * page.width, 18.8 * cm);
+
+  // Logo
+  page.shapeMode(CORNER);
+  float scaleLogo = pageWidth * 0.4 / shapeLogo.width;
+  page.shape(shapeLogo, marginLeft, marginTop, shapeLogo.width * scaleLogo, shapeLogo.height * scaleLogo);
+
+  // palette
+  page.shapeMode(CENTER);
+  float shapeScale = 0.51 / 1.438;
+  page.shape(shape, page.width / 2, page.height * 0.4, shape.width * shapeScale, shape.height * shapeScale);
+
+  // Luminance
+  page.fill(0);
+  page.textFont(fontTitle);
+  page.text("LUMINANCE 6901", marginLeft, 0.7 * pageHeight);
+
+  // Extract the 4 references from filename(ex : 2024 - 05 - 13 202302 Palette 850 069 070 862.svg ->[850, 069, 070, 862])
+  String[] parts = splitTokens(paletteFilename.replace(".svg", ""), " ");
+  String[] refs = subset(parts, 3, 4);
+
+  // Draw the 4 references
+  page.textFont(fontText);
+  page.textLeading(fontText.getDefaultSize() * 1.3);
+  drawRef(page, refs[0], marginLeft, 0.75 * pageHeight);
+  drawRef(page, refs[1], 0.52 * page.width, 0.75 * pageHeight);
+  drawRef(page, refs[2], marginLeft, 0.88 * pageHeight);
+  drawRef(page, refs[3], 0.52 * page.width, 0.88 * pageHeight);
 }
 
 void drawRef(PGraphics page, String ref, float xRef, float yRef) {
-    
-    JSONObject refLuminance = luminance.getJSONObject(ref);
-    JSONObject hsb = refLuminance.getJSONObject("hsb");
-    
-    //Draw the reference
-    page.colorMode(HSB);
-    println(hsb.getInt("hue"), hsb.getInt("saturation"), hsb.getInt("brightness"));
-    page.fill(hsb.getInt("hue"), hsb.getInt("saturation"), hsb.getInt("brightness"));
-    page.text(ref + "\n" + refLuminance.getString("text"), xRef, yRef);
+
+  JSONObject refLuminance = luminance.getJSONObject(ref);
+  JSONObject hsb = refLuminance.getJSONObject("hsb");
+
+  //Draw the reference
+  page.colorMode(HSB, 360, 100, 100);
+  //println(hsb.getInt("hue"), hsb.getInt("saturation"), hsb.getInt("brightness"));
+  page.fill(0);
+  page.text(ref + "\n" + refLuminance.getString("text"), xRef, yRef);
+
+  // color patch
+  page.noStroke();
+  float textSize = fontText.getDefaultSize();
+  page.fill(hsb.getInt("hue"), hsb.getInt("saturation"), hsb.getInt("brightness"));
+  page.ellipse(xRef + 3 * textSize, yRef - 0.5 * textSize, textSize * 1.3, textSize * 1.3);
 }
 
 void keyPressed() {
-    
-    switch(key) {
-        case'x':
-        exportPage(paletteFilename);
-        break;
-        case 'm':
-            monitorFolder();
-            break;
-    }
+
+  switch(key) {
+  case'x':
+    exportPage(paletteFilename);
+    break;
+  case 'm':
+    monitorFolder();
+    break;
+  }
 }
 
 void monitorFolder() {
-    //println("Monitoring folder " + palettesFolder);
-    
-    //Listall files in the downloads folder
-    File dir = new File(palettesFolder);
-    File[]files = dir.listFiles();
-    
-    //Check if there are files in the downloads folder
-    if (files.length > 0) {
-        //Iterate over all files in the downloads folder
-        for (int i = 0; i < files.length; i++) {
-            //Check if the file is a file
-            if (files[i].isFile()) {
-                //Check if the file name matches thepattern
-                if (files[i].getName().matches(".*Palette \\d\\d\\d \\d\\d\\d \\d\\d\\d \\d\\d\\d\\.svg")) {
-                    
-                    println(files[i].getName() + " matches the pattern");
-                    
-                    // preview
-                    paletteFilename = files[i].getName();
-                    shape = loadShape(palettesFolder + paletteFilename);
-                    previewPage(paletteFilename);
-                    
-                    // export page
-                    String pagePath = exportPage(paletteFilename);
-                    
-                    // Print the page
-                    String[]args = new String[0];
-                    args = append(args, "lp");
-                    // args = append(args, "-o");
-                    //args =append(args, "media=Custom."+ pageWidth + "x" + pageHeight + "cm");
-                    // args = append(args, "-o");
-                    // args = append(args, "scaling=100");
-                    args = append(args, pagePath);
-                    println(join(args, " "));
-                    Process p = exec(args);
-                    //Process p = exec("pwd");
-                    
-                    try {
-                        int result = p.waitFor();
-                        println("the process returned " + result);
-                    } 
-                    catch(InterruptedException e) {
-                        println(e.toString());
-                    }
-                    
-                    
-                    // Move paletteFilename from palettesFolder to archivesFolder
-                    File file = new File(palettesFolder + paletteFilename);
-                    File fileDest = new File(archivesFolder + paletteFilename);
-                    file.renameTo(fileDest);
+  //println("Monitoring folder " + palettesFolder);
+
+  //Listall files in the downloads folder
+  File dir = new File(palettesFolder);
+  File[]files = dir.listFiles();
+
+  //Check if there are files in the downloads folder
+  if (files.length > 0) {
+    //Iterate over all files in the downloads folder
+    for (int i = 0; i < files.length; i++) {
+      //Check if the file is a file
+      if (files[i].isFile()) {
+        //Check if the file name matches thepattern
+        if (files[i].getName().matches(".*Palette \\d\\d\\d \\d\\d\\d \\d\\d\\d \\d\\d\\d\\.svg")) {
+
+          println(files[i].getName() + " matches the pattern");
+
+          // preview
+          paletteFilename = files[i].getName();
+          shape = loadShape(palettesFolder + paletteFilename);
+          previewPage(paletteFilename);
+
+          // export page
+          String pagePath = exportPage(paletteFilename);
+
+          // Print the page
+          String[]args = new String[0];
+          args = append(args, "lp");
+          // args = append(args, "-o");
+          //args =append(args, "media=Custom."+ pageWidth + "x" + pageHeight + "cm");
+          // args = append(args, "-o");
+          // args = append(args, "scaling=100");
+          args = append(args, pagePath);
+          println(join(args, " "));
+          //Process p = exec(args);
+          ////Process p = exec("pwd");
+
+          //try {
+          //  int result = p.waitFor();
+          //  println("the process returned " + result);
+          //}
+          //catch(InterruptedException e) {
+          //  println(e.toString());
+          //}
 
 
-                    
-                    //Copythe file to the archives folder
-                    // File file = new File(archivesFolder + "/" + files[i].getName());
-                    // try {
-                    //     File.copy(files[i].toPath(), file.toPath());
-                // } catch(IOException e) {
-                    //     e.printStackTrace();
-                // }
-                    
-                    //Createa pdf file with the samename as the svg file
-                    // StringpdfName = file.getName().replace(".svg", ".pdf");
-                    // String[] command = {"inkscape", "--export-pdf=" + archivesFolder + "/" + pdfName, archivesFolder + "/" + file.getName()};
-                    // try {
-                    //     Process process = new ProcessBuilder(command).start();
-                    //     process.waitFor();
-                // } catch(IOException e) {
-                    //     e.printStackTrace();
-                // } catch(InterruptedException e) {
-                    //     e.printStackTrace();
-                // }
-                    
-                    //Print the pdf file
-                    // PDDocument document = null;
-                    // try {
-                    //     document = PDDocument.load(new File(archivesFolder + "/" + pdfName));
-                    //     PrinterJob job = PrinterJob.getPrinterJob();
-                    //     job.setPageable(new PDFPageable(document));
-                    //     if (job.printDialog()) {
-                    //      job.print();
-                    //  }
-                // } catch(IOException e) {
-                    //     e.printStackTrace();
-                // } catch(PrinterException e) {
-                    //     e.printStackTrace();
-                // } finally {
-                    //     if (document != null) {
-                    //      try {
-                    //      document.close();
-                    //  } catch(IOException e) {
-                    //      e.printStackTrace();
-                    //  }
-                    //  }
-                // }
-                }
-            }
+          // Move paletteFilename from palettesFolder to archivesFolder
+          File file = new File(palettesFolder + paletteFilename);
+          File fileDest = new File(archivesFolder + paletteFilename);
+          file.renameTo(fileDest);
+
+          // only process one image at a time to let the main draw display last preview
+          return;
         }
+      }
     }
-    //println("Done");
+  }
+  //println("Done");
 }
