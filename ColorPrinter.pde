@@ -10,8 +10,8 @@ String archivesFolder;
 
 // Page size
 float cm = 72 / 2.54; // Convert cm to pix at 72 DPI
-int pageWidth = round(14.8 * cm);
-int pageHeight = round(21.1 * cm);
+int pageWidth = round(10.0 * cm);
+int pageHeight = round(14.6 * cm);
 
 PShape shape;
 PShape shapeLogo;
