@@ -38,7 +38,8 @@ void setup() {
   background(255);
   println(archivesFolder);
 
-  archivesFolder = sketchPath("archives/");
+//   archivesFolder = sketchPath("archives/");
+  archivesFolder = palettesFolder + "archives/";
 
   //Verify if archives folder exists and create it if it doesn't
   File folder = new File(archivesFolder);
